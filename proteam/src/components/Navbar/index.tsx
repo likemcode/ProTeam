@@ -1,18 +1,19 @@
-import React from "react";
+import React , { useState } from "react";
 import { Menu, Moon, Search, Settings, Sun, User } from "lucide-react";
 import Link from "next/link";
-// import { useAppDispatch, useAppSelector } from "@/app/redux";
-// import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
+import { useAppDispatch, useAppSelector } from "@/app/redux";
+import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
 // import { useGetAuthUserQuery } from "@/state/api";
 // import { signOut } from "aws-amplify/auth";
 import Image from "next/image";
 
+
 const Navbar = () => {
-  // const dispatch = useAppDispatch();
-  // const isSidebarCollapsed = useAppSelector(
-  //   (state) => state.global.isSidebarCollapsed,
-  // );
-  // const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+  const dispatch = useAppDispatch();
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed,
+  );
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   // const { data: currentUser } = useGetAuthUserQuery({});
   // const handleSignOut = async () => {
@@ -30,7 +31,10 @@ const Navbar = () => {
     <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-black">
       {/* Search Bar */}
       <div className="flex items-center gap-8">
-
+      {!isSidebarCollapsed ? null: (
+        <button onClick={() => dispatch(setIsSidebarCollapsed(true))}></button>
+      )}
+          <Menu className="h-8 w-8 cursor-pointer dark:text-white"></Menu>
         <div className="relative flex h-min w-[200px]">
           <Search className="absolute left-[4px] top-1/2 mr-2 h-5 w-5 -translate-y-1/2 transform cursor-pointer dark:text-white" />
           <input
@@ -41,8 +45,21 @@ const Navbar = () => {
         </div>
       </div>
 
+      
+
       <div className="flex items-center">
-        
+        <button onClick={() => dispatch(setIsDarkMode(!isDarkMode))} className={
+          isDarkMode 
+          ? `rounded p-2 dark:hover:bg-gray-700 ` 
+          : `rounded p-2 hover:bg-gray-100`
+          }
+        > { !isDarkMode ? (
+          <Moon className="h-6 w-6 cursor-pointer dark:text-white" />
+        ) : (
+          <Sun className="h-6 w-6 cursor-pointer dark:text-white" />
+        )}
+          
+        </button>
         <Link
           href="/settings"
           className="h-min w-min rounded p-2 hover:bg-gray-100"
