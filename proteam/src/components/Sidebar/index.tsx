@@ -114,6 +114,7 @@ const Sidebar = () => {
             />
           ))}
       
+      
        {/* PRIORITIES LINKS */}
        <button
           onClick={() => setShowPriority((prev) => !prev)}
