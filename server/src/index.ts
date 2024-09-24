@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import projectRoutes from "./routes/projectRoutes";
 
 // Routes Imports
 
@@ -22,6 +23,9 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("this is homme route!");
 });
+
+app.use("/projects", projectRoutes);
+
 
 //server
 
