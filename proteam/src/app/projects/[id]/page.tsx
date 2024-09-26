@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import ProjectHeader from "@/app/projects/ProjectHeader";
+
 
 
 type Props= {
@@ -18,6 +20,8 @@ const Project= ({ params }: Props) => {
   
   return (
     <div>
+      {/* MODAL NEW TASKS */}
+      <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab}></ProjectHeader>
       <h1>Project {params.id}</h1>
     </div>
   );
