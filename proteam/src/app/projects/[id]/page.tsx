@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import ProjectHeader from "@/app/projects/ProjectHeader";
 import Board from "../Boardview";
-// import List from "../Listview";
+import List from "../Listview";
 // import Table from "../Tableview";
 // import Timelineview from "Timelineview";
 
@@ -27,7 +27,9 @@ const Project= ({ params }: Props) => {
       {activeTab === "Board" && (
         <Board id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
-
+      {activeTab === "List" && (
+        <List id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+      )}
       
     </div>
   );
