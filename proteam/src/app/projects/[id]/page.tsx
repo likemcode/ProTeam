@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import ProjectHeader from "@/app/projects/ProjectHeader";
 import Board from "../Boardview";
+import ModalNewTask from "@/components/ModalNewTask";
 import List from "../Listview";
 // import Table from "../Tableview";
 // import Timelineview from "Timelineview";
@@ -23,11 +24,16 @@ const Project= ({ params }: Props) => {
   return (
     <div>
       {/* MODAL NEW TASKS */}
+      <ModalNewTask
+        isOpen={isModalNewTaskOpen}
+        onClose={() => setIsModalNewTaskOpen(false)}
+        id={id}
+      />
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab}/>
       {activeTab === "Board" && (
         <Board id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
-      {activeTab === "List" && (
+        {activeTab === "List" && (
         <List id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
       
