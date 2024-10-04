@@ -5,6 +5,7 @@ type Props = {
   project: Project;
 };
 
+
 const ProjectCard = ({ project }: Props) => {
   return (
     <div className="rounded border p-4 shadow">
