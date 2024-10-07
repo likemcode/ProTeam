@@ -6,7 +6,7 @@ import Board from "../Boardview";
 import ModalNewTask from "@/components/ModalNewTask";
 import List from "../Listview";
 // import Table from "../Tableview";
-// import Timelineview from "Timelineview";
+import Timeline from "../TimelineView";
 
 type Props= {
     params: {
@@ -33,10 +33,12 @@ const Project= ({ params }: Props) => {
       {activeTab === "Board" && (
         <Board id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
-        {activeTab === "List" && (
+      {activeTab === "List" && (
         <List id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
       )}
-      
+      {activeTab === "Timeline" && (
+        <Timeline id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+      )}
     </div>
   );
 };
