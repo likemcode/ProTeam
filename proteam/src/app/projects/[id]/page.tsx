@@ -5,8 +5,7 @@ import ProjectHeader from "@/app/projects/ProjectHeader";
 import Board from "../Boardview";
 import ModalNewTask from "@/components/ModalNewTask";
 import List from "../Listview";
-// import Table from "../Tableview";
-import Timeline from "../TimelineView";
+import Timeline from "../Timelineview";
 
 type Props= {
     params: {
