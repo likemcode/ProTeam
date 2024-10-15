@@ -1,34 +1,46 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { Priority, Project, Task, useGetProjectsQuery, useGetTasksQuery } from "@/state/api";
 import { useAppSelector } from "../redux";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef} from "@mui/x-data-grid";
 import Header from "@/components/Header";
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { PlusCircle, ChevronUp, ChevronDown } from 'lucide-react';
 
-// Custom UI Components
-const Card = ({ children, className = '' }) => (
+// Custom UI Components with TypeScript
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = '' }) => (
   <div className={`rounded-lg bg-white shadow-md dark:bg-gray-800 ${className}`}>
     {children}
   </div>
 );
 
-const CardHeader = ({ children, className = '' }) => (
+const CardHeader: React.FC<CardProps> = ({ children, className = '' }) => (
   <div className={`px-6 py-4 ${className}`}>
     {children}
   </div>
 );
 
-const CardContent = ({ children, className = '' }) => (
+const CardContent: React.FC<CardProps> = ({ children, className = '' }) => (
   <div className={`px-6 py-4 ${className}`}>
     {children}
   </div>
 );
 
-const Select = ({ value, onValueChange, children }) => (
+interface SelectProps {
+  value: string;
+  onValueChange: (value: string) => void;
+  children: ReactNode;
+}
+
+
+const Select: React.FC<SelectProps> = ({ value, onValueChange, children }) => (
   <div className="relative inline-block w-full">
     <select 
       value={value} 
@@ -43,11 +55,24 @@ const Select = ({ value, onValueChange, children }) => (
   </div>
 );
 
-const SelectItem = ({ value, children }) => (
+interface SelectItemProps {
+  value: string;
+  children: ReactNode;
+}
+
+const SelectItem: React.FC<SelectItemProps> = ({ value, children }) => (
   <option value={value}>{children}</option>
 );
 
-const Button = ({ children, onClick, className = '', variant = 'primary', size = 'medium' }) => {
+interface ButtonProps {
+  children: ReactNode;
+  onClick: () => void;
+  className?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'small' | 'medium' | 'large';
+}
+
+const Button: React.FC<ButtonProps> = ({ children, onClick, className = '', variant = 'primary', size = 'medium' }) => {
   const baseStyle = "inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2";
   const variantStyles = {
     primary: "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500",
@@ -72,7 +97,7 @@ const Button = ({ children, onClick, className = '', variant = 'primary', size =
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<string>("1");
   const [expandedSections, setExpandedSections] = useState({
     taskDistribution: true,
@@ -114,18 +139,23 @@ const HomePage = () => {
     ? { bar: "#8884d8", barGrid: "#303030", pieFill: "#4A90E2", text: "#FFFFFF" }
     : { bar: "#8884d8", barGrid: "#E0E0E0", pieFill: "#82ca9d", text: "#000000" };
 
-  const taskColumns: GridColDef[] = [
-    { field: "title", headerName: "Title", width: 200 },
-    { field: "status", headerName: "Status", width: 150 },
-    { field: "priority", headerName: "Priority", width: 150 },
-    { 
-      field: "dueDate", 
-      headerName: "Due Date", 
-      width: 150,
-      valueGetter: (params: GridValueGetterParams) => 
-        new Date(params.row.dueDate).toLocaleDateString()
-    },
-  ];
+    const taskColumns: GridColDef[] = [
+      { field: "title", headerName: "Title", width: 200 },
+      { field: "status", headerName: "Status", width: 150 },
+      { field: "priority", headerName: "Priority", width: 150 },
+      {
+        field: "dueDate",
+        headerName: "Due Date",
+        width: 150,
+        valueGetter: (params) => {
+          const task = params.row as Task; // Ensure it's a Task object
+          if (!task || !task.dueDate) return "No due date"; // Handle missing task/dueDate
+          return new Date(task.dueDate).toLocaleDateString();
+        },
+      },
+    ];
+    
+    
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
