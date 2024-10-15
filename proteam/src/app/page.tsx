@@ -1,13 +1,6 @@
+import HomePage from "./home/page";
 
-// src/app/page.tsx
-import React from 'react';
+export default function Home() {
+  return <HomePage />;
+}
 
-const HomePage = () => {
-  return (
-    <div>
-      <h1>Welcome to my Homepage!</h1>
-    </div>
-  );
-};
-
-export default HomePage; 
