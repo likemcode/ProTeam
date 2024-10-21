@@ -93,7 +93,9 @@ const ReusablePriorityPage = ({ priority }: Props) => {
     (task: Task) => task.priority === priority,
   );
 
-  if (isTasksError || !tasks) return <div>Error fetching tasks</div>;
+  if (isTasksError || !tasks) return <div>{`${tasks }`}</div>;
+
+
 
   return (
     <div className="m-5 p-4">

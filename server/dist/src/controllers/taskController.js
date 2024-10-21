@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserTasks = exports.updateTaskStatus = exports.deleteTask = exports.createTask = exports.getTasks = void 0;
+exports.getUserTasks = exports.updateTaskStatus = exports.createTask = exports.getTasks = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -17,7 +17,7 @@ const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const tasks = yield prisma.task.findMany({
             where: {
-                projectId: Number(projectId)
+                projectId: Number(projectId),
             },
             include: {
                 author: true,
@@ -29,29 +29,16 @@ const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(tasks);
     }
     catch (error) {
-        res.status(500).json({ error: error.message });
+        res
+            .status(500)
+            .json({ message: `Error retrieving tasks: ${error.message}` });
     }
 });
 exports.getTasks = getTasks;
-// export const getTaskById = async (req: Request, res: Response): Promise<void> => {
-//     try {
-//         const { id } = req.params;
-//         const task = await prisma.task.findUnique({
-//             where: { id: parseInt(id) },
-//         });
-//         if (!task) {
-//             res.status(404).json({ message: "Task not found" });
-//             return;
-//         }
-//         res.status(200).json(task);
-//     } catch (error: any) {
-//         res.status(500).json({ message: `Failed to get task: ${error.message}` });
-//     }
-// };
 const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, description, status, priority, tags, startDate, dueDate, points, projectId, authorUserId, assignedUserId, } = req.body;
     try {
-        const task = yield prisma.task.create({
+        const newTask = yield prisma.task.create({
             data: {
                 title,
                 description,
@@ -66,26 +53,15 @@ const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 assignedUserId,
             },
         });
-        res.status(201).json(task);
+        res.status(201).json(newTask);
     }
     catch (error) {
-        res.status(500).json({ message: `Failed to create task: ${error.message}` });
+        res
+            .status(500)
+            .json({ message: `Error creating a task: ${error.message}` });
     }
 });
 exports.createTask = createTask;
-const deleteTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { id } = req.params;
-        const task = yield prisma.task.delete({
-            where: { id: parseInt(id) },
-        });
-        res.status(200).json(task);
-    }
-    catch (error) {
-        res.status(500).json({ message: `Failed to delete task: ${error.message}` });
-    }
-});
-exports.deleteTask = deleteTask;
 const updateTaskStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { taskId } = req.params;
     const { status } = req.body;
