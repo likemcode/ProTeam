@@ -77,8 +77,9 @@ const ReusablePriorityPage = ({ priority }: Props) => {
   const [view, setView] = useState("list");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
 
-  const { data: currentUser } = useGetAuthUserQuery({});
-  const userId = currentUser?.userDetails?.userId ?? null;
+  // const { data: currentUser } = useGetAuthUserQuery({});
+  // const userId = currentUser?.userDetails?.userId ?? null;
+  const userId=1;
   const {
     data: tasks,
     isLoading,
@@ -93,9 +94,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
     (task: Task) => task.priority === priority,
   );
 
-  if (isTasksError || !tasks) return <div>{`${tasks }`}</div>;
-
-
+  if (isTasksError || !tasks) return <div>Error fetching tasks</div>;
 
   return (
     <div className="m-5 p-4">
