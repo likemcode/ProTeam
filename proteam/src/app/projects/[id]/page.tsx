@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import ProjectHeader from "@/app/projects/ProjectHeader";
-import Board from "../Boardview";
+import Board from "../BoardView";
 import ModalNewTask from "@/components/ModalNewTask";
-import List from "../Listview";
-import Timeline from "../Timelineview";
-import Table from "../Tableview";
+import List from "../ListView";
+import Timeline from "../TimelineView";
+import Table from "../TableView";
 
 type Props= {
     params: {
