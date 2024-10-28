@@ -49,3 +49,4 @@ const Project= ({ params }: Props) => {
 };
 
 export default Project;
+
