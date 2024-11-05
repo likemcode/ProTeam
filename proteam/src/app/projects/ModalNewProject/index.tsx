@@ -91,3 +91,4 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
 };
 
 export default ModalNewProject;
+
